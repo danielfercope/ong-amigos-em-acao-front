@@ -1,6 +1,6 @@
 # panfit_app
 
-Aplicativo mobile para uma panificadora
+Front-end de um aplicativo mobile para uma panificadora
 
 ## Getting Started
 
