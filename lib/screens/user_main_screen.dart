@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'production/orders.dart';
 import 'production/cooking.dart';
 import 'production/stock.dart';
+import 'package:panfit_app/components/side_bar.dart';
 
 class UserMainScreen extends StatefulWidget {
   @override
@@ -26,9 +27,15 @@ class _UserMainScreenState extends State<UserMainScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
-        title: Text('Panfit'),
+        centerTitle: true,
+        title: Image.asset(
+          'assets/panfitLogo.png',
+          height: 40,
+        ),
       ),
+      drawer: SideBar(),
       body: Center(
         child: _pages.elementAt(_selectedIndex),
       ),
