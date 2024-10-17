@@ -14,7 +14,6 @@ class _InputRegisterPageState extends State<InputRegisterPage> {
     String dataAtual = DateFormat('dd/MM/yyyy').format(DateTime.now());
 
     return Scaffold(
-      backgroundColor: Colors.white,
       appBar: AppBar(
         title: Text(
           'Cadastro de Insumos',
@@ -145,6 +144,7 @@ class _InputRegisterPageState extends State<InputRegisterPage> {
                 ElevatedButton.icon(
                   onPressed: () {
                     // Inserir lógica para excluir
+                    // habilitar botão apenas quando for editar o insumo
                   },
                   icon: Icon(Icons.delete, color: Colors.white),
                   label: Text(''),

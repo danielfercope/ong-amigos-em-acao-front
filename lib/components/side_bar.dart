@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:panfit_app/screens/sign_in/login.dart';
 
 class SideBar extends StatelessWidget {
   @override
@@ -64,7 +65,11 @@ class SideBar extends StatelessWidget {
             title: Text('Sair'),
             onTap: () {
               Navigator.pop(context);
-              // Direcionar usuário para página de login
+              Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(builder: (context) => LoginPage()),
+                    (Route<dynamic> route) => false,
+              );
             },
           ),
         ],

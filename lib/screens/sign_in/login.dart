@@ -11,9 +11,7 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor: Colors.white,
         elevation: 0,
         centerTitle: true,
         title: Image.asset(
@@ -131,7 +129,7 @@ class _LoginPageState extends State<LoginPage> {
             ),
             SizedBox(height: 40),
 
-            // Campo de Entrar
+            // Botão de Entrar
             Container(
               width: 150,
               child: ElevatedButton(
@@ -148,11 +146,12 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 child: Text(
                   'Entrar',
-                  style: TextStyle(fontFamily: 'Poppins'),
+                  style: TextStyle(
+                      fontFamily: 'Poppins'
+                  ),
                 ),
               ),
             ),
-
             SizedBox(height: 100),
 
             // Botão de para criar conta/ cadastro de usuário
@@ -163,7 +162,7 @@ class _LoginPageState extends State<LoginPage> {
               child: Text(
                 'Criar uma conta',
                 style: TextStyle(
-                  fontSize: 20,
+                  fontSize: 17,
                   color: Colors.black,
                   fontFamily: 'Poppins',
                 ),
@@ -174,6 +173,7 @@ class _LoginPageState extends State<LoginPage> {
             TextButton(
               onPressed: () {
                 Navigator.pushReplacementNamed(context, '/password_reset');
+                // tornar esta navegação funcional, redirecionando para uma página onde é enviado um e-mail para o usuário resetando a senha com um código random
               },
               child: Text(
                 'Esqueceu a senha? Clique aqui',
