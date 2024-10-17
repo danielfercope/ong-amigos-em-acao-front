@@ -17,6 +17,11 @@ class MyApp extends StatelessWidget {
       title: 'Panfit',
       theme: ThemeData(
         primarySwatch: Colors.brown,
+        textSelectionTheme: TextSelectionThemeData(
+          cursorColor: Color(0xFF996536), // Cor do cursor
+          selectionColor: Color(0xFFC4A580), // Cor da seleção de texto
+          selectionHandleColor: Color(0xFF996536), // Cor das alças de seleção
+        ),
       ),
       initialRoute: '/login',
       routes: {
