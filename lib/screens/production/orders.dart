@@ -1,12 +1,109 @@
 import 'package:flutter/material.dart';
+import 'package:panfit_app/screens/production/register/input_time.dart';
+import '../util/OrderClass.dart';
+
 
 class OrdersPage extends StatelessWidget {
+  final List<OrderClass> orders = [
+    OrderClass(
+      imageUrl: '/Users/daniel/Projetos/panfit/front/PanfitApp-Front/assets/boloPanfitChocolate.png',
+      title: 'Bolo de chocolate',
+      priority: 'Alta',
+    ),
+    OrderClass(
+      imageUrl: '/Users/daniel/Projetos/panfit/front/PanfitApp-Front/assets/boloPanfitMorango.png',
+      title: 'Bolo de morango',
+      priority: 'Média',
+    ),
+    // Adicione mais ordens aqui
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Text('Bem-vindo à tela de Pedidos!'),
+      appBar: AppBar(
+        title: Text(''
+            'Pedidos de Produção',
+        style: TextStyle(
+          color: Colors.brown,
+          fontFamily: 'Poppins',
+        ),
+        ),
+
+      ),
+      body: ListView.builder(
+        itemCount: orders.length,
+        itemBuilder: (context, index) {
+          final order = orders[index];
+          return Card(
+            margin: EdgeInsets.all(8.0),
+            child: ListTile(
+              leading: Image.asset(order.imageUrl), // Imagem do produto
+              title: Text(order.title), // Título do produto
+              subtitle: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text('Prioridade: ${order.priority}'), // Prioridade
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      _buildPriorityIcon(order.priority),   // Ícone de prioridade`
+                    ],
+                  ),
+                ],
+              ),
+
+              trailing: ElevatedButton(
+                  onPressed: () async {
+
+                    // Ao clicar no botão Add, abrir a tela de cadastro de insumos
+                    final result = await Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => InputTime(),
+                      ),
+                    );
+
+                    // Exibir o SnackBar com a mensagem de sucesso ao retornar para a tela de estoque
+                    if (result != null) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(content: Text(result)),
+                      );
+                    }
+                  },
+                child: Text('Iniciar'),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Color(0xFFC4A580),
+                  foregroundColor: Colors.white,// Cor de fundo do botão
+                ),
+              ), // Botão "Iniciar" no trailing
+              // Ícone de prioridade
+            ),
+          );
+        },
       ),
     );
   }
+
+
+  Widget _buildPriorityIcon(String priority) {
+    switch (priority) {
+      case 'Alta':
+        return Icon(Icons.warning, color: Colors.red);
+      case 'Média':
+        return Icon(Icons.warning, color: Colors.orange);
+      case 'Baixa':
+        return Icon(Icons.check_circle, color: Colors.green);
+      default:
+        return Icon(Icons.help_outline);
+    }
+  }
 }
+
+
+

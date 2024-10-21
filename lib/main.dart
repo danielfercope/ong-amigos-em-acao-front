@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'screens/sign_in/login.dart';
 import 'screens/sign_in/user_type.dart';
 import 'screens/sign_in/register.dart';
-import 'screens/production/orders.dart';
 import 'screens/user_main_screen.dart';
 
 void main() {
