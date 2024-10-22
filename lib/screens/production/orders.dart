@@ -15,6 +15,11 @@ class OrdersPage extends StatelessWidget {
       title: 'Bolo de morango',
       priority: 'Média',
     ),
+    OrderClass(
+      imageUrl: '/Users/daniel/Projetos/panfit/front/PanfitApp-Front/assets/paoMaromba.png',
+      title: 'Pão maromba',
+      priority: 'Baixa',
+    ),
     // Adicione mais ordens aqui
   ];
 
@@ -94,11 +99,11 @@ class OrdersPage extends StatelessWidget {
   Widget _buildPriorityIcon(String priority) {
     switch (priority) {
       case 'Alta':
-        return Icon(Icons.warning, color: Colors.red);
+        return Icon(Icons.campaign_sharp, color: Colors.red);
       case 'Média':
         return Icon(Icons.warning, color: Colors.orange);
       case 'Baixa':
-        return Icon(Icons.check_circle, color: Colors.green);
+        return Icon(Icons.watch_later_outlined, color: Colors.blueGrey);
       default:
         return Icon(Icons.help_outline);
     }

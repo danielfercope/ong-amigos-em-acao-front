@@ -1,13 +1,49 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'dart:async';
 
 class InputTime extends StatefulWidget {
   @override
   _InputTimeState createState() => _InputTimeState();
 }
 
-class _InputTimeState extends State<InputTime> {
+class _InputTimeState extends State<InputTime> with SingleTickerProviderStateMixin {
   int quantidade = 1;
+  int durationInSeconds = 0; // Duração do temporizador em segundos
+  bool isRunning = false; // Indica se o temporizador está em execução
+  late AnimationController _controller; // Controlador de animação
+  late Animation<double> _animation; // Animação de contagem regressiva
+
+  @override
+  void initState() {
+    super.initState();
+    // Inicializa o controlador de animação
+    _controller = AnimationController(
+      vsync: this,
+      duration: Duration(seconds: durationInSeconds),
+    );
+    _animation = Tween<double>(begin: 1.0, end: 0.0).animate(_controller);
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose(); // Libera o controlador de animação
+    super.dispose();
+  }
+
+  void startTimer() {
+    setState(() {
+      isRunning = true;
+      _controller.duration = Duration(seconds: durationInSeconds);
+      _controller.forward();
+    });
+
+    Timer(Duration(seconds: durationInSeconds), () {
+      setState(() {
+        isRunning = false;
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -16,27 +52,16 @@ class _InputTimeState extends State<InputTime> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Cadastro de Insumos',
+          'Iniciar produção',
           style: TextStyle(
             fontFamily: 'Poppins',
           ),
         ),
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back),
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          color: Color(0xFFAA7845),
-        ),
-        backgroundColor: Colors.white,
-        elevation: 0,
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-
             // Imagem do insumo
             Center(
               child: Container(
@@ -46,136 +71,56 @@ class _InputTimeState extends State<InputTime> {
                 child: Icon(Icons.image, size: 50, color: Colors.white),
               ),
             ),
-            SizedBox(height: 40),
-
-            // Campo Nome
-            Container(
-              width: 360,
-              child: TextField(
-                decoration: InputDecoration(
-                  filled: true,
-                  fillColor: Color(0xFFF4E9DA),
-                  labelText: 'Nome do insumo',
-                  labelStyle: TextStyle(color: Color(0xFF996536)),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10),
-                    borderSide: BorderSide.none,
+            SizedBox(height: 10),
+            Text(
+              'Defina o tempo (em segundos):',
+              style: TextStyle(fontSize: 18),
+            ),
+            SizedBox(height: 10),
+            // Campo de entrada para o tempo
+            TextField(
+              keyboardType: TextInputType.number,
+              decoration: InputDecoration(
+                border: OutlineInputBorder(),
+                labelText: 'Tempo em segundos',
+              ),
+              onChanged: (value) {
+                setState(() {
+                  durationInSeconds = int.tryParse(value) ?? 0;
+                });
+              },
+            ),
+            SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: isRunning ? null : startTimer, // Desabilita o botão enquanto o timer está rodando
+              child: Text(isRunning ? 'Em execução...' : 'Iniciar'),
+            ),
+            SizedBox(height: 20),
+            // Exibe a animação do temporizador
+            AnimatedBuilder(
+              animation: _animation,
+              builder: (context, child) {
+                return Container(
+                  width: 200,
+                  height: 200,
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                      color: Colors.green,
+                      width: 5,
+                    ),
+                    borderRadius: BorderRadius.circular(100),
                   ),
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10),
-                    borderSide: BorderSide.none,
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10),
-                    borderSide: BorderSide(
-                      color: Color(0xFF996536),
-                      width: 1.0,
+                  child: Center(
+                    child: Text(
+                      (durationInSeconds * _animation.value).toStringAsFixed(0),
+                      style: TextStyle(fontSize: 48),
                     ),
                   ),
-                ),
-              ),
-            ),
-            SizedBox(height: 20),
-
-            // Campo Quantidade
-            Text('Quantidade', style: TextStyle(fontFamily: 'Poppins')),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                IconButton(
-                  icon: Icon(Icons.remove),
-                  onPressed: () {
-                    setState(() {
-                      if (quantidade > 1) quantidade--;
-                    });
-                  },
-                ),
-                Text(
-                  '$quantidade',
-                  style: TextStyle(
-                    fontFamily: 'Poppins',
-                    fontSize: 20,
-                  ),
-                ),
-                IconButton(
-                  icon: Icon(Icons.add),
-                  onPressed: () {
-                    setState(() {
-                      quantidade++;
-                    });
-                  },
-                ),
-              ],
-            ),
-            SizedBox(height: 20),
-
-            // Campo Status
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 10.0),
-              child: Text(
-                'Status: Disponível',
-                style: TextStyle(
-                  fontSize: 15,
-                  fontFamily: 'Poppins',
-                ),
-              ),
-            ),
-            SizedBox(height: 5),
-
-            // Campo Data de cadastro
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 10.0),
-              child: Text(
-                'Data de cadastro: $dataAtual',
-                style: TextStyle(
-                  fontSize: 15,
-                  fontFamily: 'Poppins',
-                ),
-              ),
+                );
+              },
             ),
             Spacer(),
-
             // Botões Salvar e Excluir
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-
-                // Botão Excluir insumo
-                ElevatedButton.icon(
-                  onPressed: () {
-                    // Inserir lógica para excluir
-                    // habilitar botão apenas quando for editar o insumo
-                  },
-                  icon: Icon(Icons.delete, color: Colors.white),
-                  label: Text(''),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.grey[300],
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    minimumSize: Size(50, 60),
-                  ),
-                ),
-
-                // Botão Salvar insumo
-                ElevatedButton.icon(
-                  onPressed: () {
-
-                    // Ao clicar em "Salvar", exibir mensagem de sucesso e retornar para a tela de estoque
-                    Navigator.pop(context, 'Insumo cadastrado com sucesso!');
-                  },
-                  icon: Icon(Icons.save, color: Colors.black),
-                  label: Text('Salvar'),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Color(0xFFB8FF8A),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    minimumSize: Size(120, 60),
-                  ),
-                ),
-              ],
-            ),
           ],
         ),
       ),
