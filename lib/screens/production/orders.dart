@@ -70,7 +70,7 @@ class OrdersPage extends StatelessWidget {
                     final result = await Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => InputTime(),
+                        builder: (context) => InputTime(order: order,),
                       ),
                     );
 

@@ -12,7 +12,7 @@ class StockPage extends StatelessWidget {
             TabBar(
               tabs: [
                 Tab(text: 'Produtos'),
-                Tab(text: 'Insumos'),
+                Tab(text: 'Ingredientes'),
               ],
               labelColor: Color(0xFF996536),
               unselectedLabelColor: Colors.grey,
@@ -25,7 +25,7 @@ class StockPage extends StatelessWidget {
                     child: Text('Lista de Produtos'),
                   ),
                   Center(
-                    child: Text('Lista de Insumos'),
+                    child: Text('Lista de Ingredientes'),
                   ),
                 ],
               ),

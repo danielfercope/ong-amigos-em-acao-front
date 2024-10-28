@@ -1,3 +1,15 @@
+android {
+    compileSdkVersion 33
+
+    defaultConfig {
+        applicationId "com.work.panfit_app"
+        minSdkVersion 21
+        targetSdkVersion 33
+        versionCode flutterVersionCode.toInteger()
+        versionName flutterVersionName
+    }
+}
+
 allprojects {
     repositories {
         google()

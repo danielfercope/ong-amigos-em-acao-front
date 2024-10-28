@@ -1,28 +1,28 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
-import 'dart:async';
+
+import '../../util/OrderClass.dart';
 
 class InputTime extends StatefulWidget {
+  final OrderClass order;
+
+  InputTime({required this.order});
+
   @override
   _InputTimeState createState() => _InputTimeState();
 }
 
 class _InputTimeState extends State<InputTime> with SingleTickerProviderStateMixin {
-  int quantidade = 1;
-  int durationInSeconds = 0; // Duração do temporizador em segundos
+  int durationInMinutes = 0; // Duração do temporizador em minutos
   bool isRunning = false; // Indica se o temporizador está em execução
   late AnimationController _controller; // Controlador de animação
-  late Animation<double> _animation; // Animação de contagem regressiva
 
   @override
   void initState() {
     super.initState();
-    // Inicializa o controlador de animação
     _controller = AnimationController(
       vsync: this,
-      duration: Duration(seconds: durationInSeconds),
+      duration: Duration(minutes: durationInMinutes),
     );
-    _animation = Tween<double>(begin: 1.0, end: 0.0).animate(_controller);
   }
 
   @override
@@ -34,21 +34,41 @@ class _InputTimeState extends State<InputTime> with SingleTickerProviderStateMix
   void startTimer() {
     setState(() {
       isRunning = true;
-      _controller.duration = Duration(seconds: durationInSeconds);
-      _controller.forward();
+      _controller.duration = Duration(minutes: durationInMinutes);
+      _controller.reverse(from: 1.0); // Inicia a animação do fim para o começo
     });
 
-    Timer(Duration(seconds: durationInSeconds), () {
-      setState(() {
-        isRunning = false;
-      });
+    _controller.addStatusListener((status) {
+      if (status == AnimationStatus.dismissed) {
+        setState(() {
+          isRunning = false;
+        });
+      }
+    });
+  }
+
+  String formatDuration(int totalSeconds) {
+    int minutes = totalSeconds ~/ 60;
+    int seconds = totalSeconds % 60;
+    return '${minutes.toString().padLeft(2, '0')}min ${seconds.toString().padLeft(2, '0')}seg';
+  }
+
+  void incrementDuration() {
+    setState(() {
+      durationInMinutes++;
+    });
+  }
+
+  void decrementDuration() {
+    setState(() {
+      if (durationInMinutes > 0) {
+        durationInMinutes--;
+      }
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    String dataAtual = DateFormat('dd/MM/yyyy').format(DateTime.now());
-
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -62,65 +82,77 @@ class _InputTimeState extends State<InputTime> with SingleTickerProviderStateMix
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
-            // Imagem do insumo
             Center(
-              child: Container(
+              child: Image.asset(
+                widget.order.imageUrl,
                 width: 200,
                 height: 200,
-                color: Colors.grey[300],
-                child: Icon(Icons.image, size: 50, color: Colors.white),
+                fit: BoxFit.cover,
               ),
             ),
-            SizedBox(height: 10),
+            SizedBox(height: 20),
             Text(
-              'Defina o tempo (em segundos):',
-              style: TextStyle(fontSize: 18),
+              'Tempo: ${formatDuration(durationInMinutes * 60)}', // Converte minutos para segundos para exibir
+              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
             ),
             SizedBox(height: 10),
-            // Campo de entrada para o tempo
-            TextField(
-              keyboardType: TextInputType.number,
-              decoration: InputDecoration(
-                border: OutlineInputBorder(),
-                labelText: 'Tempo em segundos',
-              ),
-              onChanged: (value) {
-                setState(() {
-                  durationInSeconds = int.tryParse(value) ?? 0;
-                });
-              },
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                IconButton(
+                  icon: Icon(Icons.remove),
+                  onPressed: decrementDuration,
+                ),
+                IconButton(
+                  icon: Icon(Icons.add),
+                  onPressed: incrementDuration,
+                ),
+              ],
             ),
             SizedBox(height: 20),
             ElevatedButton(
-              onPressed: isRunning ? null : startTimer, // Desabilita o botão enquanto o timer está rodando
+              onPressed: isRunning ? null : startTimer,
               child: Text(isRunning ? 'Em execução...' : 'Iniciar'),
             ),
             SizedBox(height: 20),
-            // Exibe a animação do temporizador
             AnimatedBuilder(
-              animation: _animation,
+              animation: _controller,
               builder: (context, child) {
-                return Container(
-                  width: 200,
-                  height: 200,
-                  decoration: BoxDecoration(
-                    border: Border.all(
-                      color: Colors.green,
-                      width: 5,
+                return Column(
+                  children: [
+                    Stack(
+                      alignment: Alignment.center,
+                      children: [
+                        SizedBox(
+                          width: 200,
+                          height: 200,
+                          child: CircularProgressIndicator(
+                            value: _controller.value,
+                            strokeWidth: 8.0,
+                            valueColor: AlwaysStoppedAnimation<Color>(Colors.green),
+                            backgroundColor: Colors.grey[200],
+                          ),
+                        ),
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              formatDuration((durationInMinutes * 60 * _controller.value).toInt()), // Converte para segundos
+                              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                            ),
+                            Text(
+                              '${(_controller.value * 100).toStringAsFixed(0)}%',
+                              style: TextStyle(fontSize: 16),
+                            ),
+                          ],
+                        ),
+                      ],
                     ),
-                    borderRadius: BorderRadius.circular(100),
-                  ),
-                  child: Center(
-                    child: Text(
-                      (durationInSeconds * _animation.value).toStringAsFixed(0),
-                      style: TextStyle(fontSize: 48),
-                    ),
-                  ),
+                  ],
                 );
               },
             ),
             Spacer(),
-            // Botões Salvar e Excluir
           ],
         ),
       ),
