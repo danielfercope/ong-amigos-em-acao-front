@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:panfit_app/screens/production/register/input_time.dart';
 import '../util/OrderClass.dart';
 
-
 class OrdersPage extends StatelessWidget {
   final List<OrderClass> orders = [
     OrderClass(
@@ -20,7 +19,6 @@ class OrdersPage extends StatelessWidget {
       title: 'Pão maromba',
       priority: 'Baixa',
     ),
-    // Adicione mais ordens aqui
   ];
 
   @override

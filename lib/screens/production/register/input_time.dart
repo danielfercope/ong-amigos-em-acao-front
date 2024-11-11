@@ -12,9 +12,9 @@ class InputTime extends StatefulWidget {
 }
 
 class _InputTimeState extends State<InputTime> with SingleTickerProviderStateMixin {
-  int durationInMinutes = 0; // Duração do temporizador em minutos
-  bool isRunning = false; // Indica se o temporizador está em execução
-  late AnimationController _controller; // Controlador de animação
+  int durationInMinutes = 0;
+  bool isRunning = false;
+  late AnimationController _controller;
 
   @override
   void initState() {
@@ -27,7 +27,7 @@ class _InputTimeState extends State<InputTime> with SingleTickerProviderStateMix
 
   @override
   void dispose() {
-    _controller.dispose(); // Libera o controlador de animação
+    _controller.dispose();
     super.dispose();
   }
 
@@ -35,7 +35,7 @@ class _InputTimeState extends State<InputTime> with SingleTickerProviderStateMix
     setState(() {
       isRunning = true;
       _controller.duration = Duration(minutes: durationInMinutes);
-      _controller.reverse(from: 1.0); // Inicia a animação do fim para o começo
+      _controller.reverse(from: 1.0);
     });
 
     _controller.addStatusListener((status) {

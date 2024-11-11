@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'production/orders.dart';
 import 'production/cooking.dart';
 import 'production/stock.dart';
+import 'finances/finances.dart';
+import 'finances/caixaScreen.dart';
 import 'package:panfit_app/components/side_bar.dart';
 
 class UserMainScreen extends StatefulWidget {
@@ -13,6 +15,8 @@ class _UserMainScreenState extends State<UserMainScreen> {
   int _selectedIndex = 0;
 
   static List<Widget> _pages = <Widget>[
+    CaixaScreen(),
+    FinancesScreen(),
     OrdersPage(),
     CookingPage(),
     StockPage(),
@@ -42,20 +46,29 @@ class _UserMainScreenState extends State<UserMainScreen> {
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            icon: Icon(Icons.shopping_cart),
+            icon: Icon(Icons.attach_money),
+            label: 'Caixa',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.assessment),
+            label: 'Faturamento',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.receipt_long),
             label: 'Pedidos',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.emoji_food_beverage_outlined),
+            icon: Icon(Icons.restaurant_menu),
             label: 'Produção',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.inventory),
+            icon: Icon(Icons.warehouse),
             label: 'Estoque',
           ),
         ],
         currentIndex: _selectedIndex,
         selectedItemColor: Color(0xFF996536),
+        unselectedItemColor: Colors.grey, // Cor dos itens não selecionados
         onTap: _onItemTapped,
       ),
     );
