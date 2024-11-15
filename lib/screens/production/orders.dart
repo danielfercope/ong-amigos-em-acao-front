@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:panfit_app/screens/production/register/input_time.dart';
 import '../util/OrderClass.dart';
 
+<<<<<<< HEAD
 //GET http://localhost:8083/production?is_completed=false
+=======
+>>>>>>> 14b18273c10bd8cca23e1b7451ec833ecdf06a12
 class OrdersPage extends StatelessWidget {
   final List<OrderClass> orders = [
     OrderClass(
