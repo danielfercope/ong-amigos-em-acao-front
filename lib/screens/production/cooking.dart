@@ -6,6 +6,8 @@ class CookingPage extends StatefulWidget {
 }
 
 class _CookingPageState extends State<CookingPage> {
+
+  //método findAll de produtos com status concluído
   final List<Order> orders = [
     Order(
       imageUrl: '/Users/daniel/Projetos/panfit/front/PanfitApp-Front/assets/boloPanfitChocolate.png',
@@ -58,10 +60,10 @@ class _CookingPageState extends State<CookingPage> {
                       return Card(
                         margin: EdgeInsets.all(8.0),
                         child: CheckboxListTile(
-                          title: Text(order.title), // Título do produto
-                          subtitle: Text('Prioridade: ${order.priority}'), // Prioridade
-                          secondary: Image.asset(order.imageUrl), // Imagem do produto
-                          value: _selectedOrders[index], // Estado do Checkbox
+                          title: Text(order.title),
+                          subtitle: Text('Tempo restante: ${order.priority}'),
+                          secondary: Image.asset(order.imageUrl),
+                          value: _selectedOrders[index],
                           onChanged: (bool? value) {
                             setState(() {
                               _selectedOrders[index] = value!; // Atualiza o estado
@@ -72,7 +74,27 @@ class _CookingPageState extends State<CookingPage> {
                     },
                   ),
                   // Aba "Concluídos" - coloque o conteúdo que desejar aqui
-                  Center(child: Text('Lista de Itens Concluídos')),
+                  ListView.builder(
+                    itemCount: orders.length,
+                    itemBuilder: (context, index) {
+                      final order = orders[index];
+                      return Card(
+                        margin: EdgeInsets.all(8.0),
+                        child: ListTile(
+                          title: Text(order.title),
+                          subtitle: Text('Tempo restante: ${order.priority}'),
+                          leading: Image.asset(order.imageUrl),
+                          trailing: IconButton(
+                            icon: Icon(Icons.print),
+                            onPressed: () {
+                              print('Gerando código de barras para: ${order.title}');
+                            },
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+
                 ],
               ),
             ),
