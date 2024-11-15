@@ -13,14 +13,13 @@ class Item {
     required this.category,
   });
 
-// Método para converter JSON em uma instância de Product
   factory Item.fromJson(Map<String, dynamic> json) {
     return Item(
       id: json['id'],
       name: json['name'],
-      GTIN: json['GTIN'].toDouble(),
-      wheight: json['wheight'].toDouble(),
-      category: json['category'].toDouble(),
+      GTIN: json['GTIN'],
+      wheight: json['wheight'],
+      category: json['category'],
     );
   }
 
