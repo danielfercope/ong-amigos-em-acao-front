@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ABA GESTOR</title>
+    <link rel="stylesheet" href="/Laura/style_create.css">
+</head>
+<body>
+    <div class="container">
+        <div class="form-container">
+            <h1>Criar Conta</h1>
+            <p class="create_text">ABA GESTOR</p>
+            <form id="create-account-form">
+                <label for="name">Nome</label>
+                <input id="name" name="nomeGestor" type="text" placeholder="Digite seu nome" required>
+                
+                <label for="e-mail">E-mail</label>
+                <input id="e-mail" name="emailGestor" type="email" placeholder="Digite seu e-mail" required>
+                
+                <label for="password">Senha</label>
+                <input id="password" name="pinGestor" type="password" placeholder="Digite sua senha" required>
+
+                <button class="create" type="submit">Criar conta</button>
+            </form>
+        </div>
+        <div class="welcome-container">
+            <h2>Olá, Gestor!</h2>
+            <p>Cadastre seus dados pessoais</p>
+            <br>
+            <a class="login-btn" href="/project_pac_amigos/gestor/login_gestor.html">Login</a>
+        </div>
+    </div>
+    <script>
+        document.getElementById('create-account-form').addEventListener('submit', function(event) {
+            event.preventDefault(); 
+
+            const formData = new FormData(event.target);
+            const data = {
+                nomeGestor: formData.get('nomeGestor'),
+                emailGestor: formData.get('emailGestor'),
+                pinGestor: formData.get('pinGestor')
+            };
+
+            // Log to check values before sending
+            console.log('Data to be sent:', data);
+
+            fetch('http://127.0.0.1:5000/cadastrar-gestores', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => response.json().then(data => ({status: response.status, body: data})))
+            .then(response => {
+                if (response.status === 201) {
+                    alert('Conta criada com sucesso!');
+                    window.location.href = '/Laura/gestor/login_gestor.html';
+                } else {
+                    alert('Erro ao criar conta! ' + (response.body.message || ''));
+                }
+            })
+            .catch(error => {
+                console.error('Erro:', error);
+                alert('Erro ao criar conta!');
+            });
+        });
+    </script>
+</body>
+</html>

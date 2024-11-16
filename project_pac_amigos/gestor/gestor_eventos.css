@@ -1,0 +1,354 @@
+/* General Styles */
+body,
+html {
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+}
+
+.menu a.active {
+    color: #2999E7;
+}
+
+.container {
+    display: flex;
+    height: 100vh;
+}
+
+/* Barra lateral estilo */
+.sidebar {
+    background-color: #e3e3e338;
+    width: 250px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 40px;
+}
+
+.profile {
+    text-align: center;
+    margin-bottom: 20px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.profile-img {
+    width: 100px;
+    height: 100px;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.menu ul {
+    list-style: none;
+    padding: 0;
+    width: 100%;
+    text-align: center;
+}
+
+.menu ul li {
+    padding: 10px 0;
+    width: 100%;
+    cursor: pointer;
+}
+
+.menu ul a {
+    color: #000;
+    text-decoration: none;
+}
+
+.menu ul a:hover {
+    color: #2999E7;
+}
+
+.logout {
+    margin-top: auto;
+    padding: 20px;
+}
+
+.logout a {
+    text-decoration: none;
+    color: #000;
+}
+
+.logout a:hover {
+    color: #2999E7;
+}
+
+/* Main Content Styles */
+.main-content {
+    flex: 1;
+    padding: 20px;
+}
+
+.header {
+    margin-bottom: 20px;
+}
+
+.header .username {
+    font-size: 2.5em;
+    font-weight: bold;
+}
+
+.header span {
+    color: #2999E7;
+}
+
+/* Background da aba principal */
+.events {
+    background-color: #e3e3e338;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+/* Botões troca de aba */
+.tabs {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 20px;
+}
+
+.tabs button {
+    font-family: 'Poppins', sans-serif;
+    font-size: 20px;
+}
+
+.tab {
+    padding: 10px 20px;
+    cursor: pointer;
+    border: none;
+    background: none;
+    font-weight: bold;
+    color: #333;
+}
+
+.tab:hover {
+    color: #2999E7;
+}
+
+.tab.active {
+    color: #2999E7;
+    border-bottom: 2px solid #2999E7;
+    font-weight: bold;
+}
+
+/* Criar eventos */
+.create-event-form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.form-group {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group label {
+    margin-bottom: 5px;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 10px 0 10px 10px;
+    background-color: #fff;
+    border: none;
+    outline: none;
+}
+
+.label {
+    position: absolute;
+    left: 50%;
+    top: 100%;
+    transform: translateX(-50%);
+    width: 0%;
+    height: 2px;
+    background: #2999E7;
+    transition: 0.3s;
+}
+
+input:focus~.label {
+    width: 100%;
+}
+
+.form-group i {
+    position: absolute;
+    right: 10px;
+    top: 35px;
+    color: #2999E7;
+}
+
+.event-cover {
+    width: 100%;
+    height: 100px;
+    background-color: #ccc;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
+}
+
+.event-cover i {
+    font-size: 2em;
+    color: #aaa;
+}
+
+.save-btn {
+    grid-column: span 2;
+    padding: 10px 20px;
+    background-color: #2999E7;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    align-self: center;
+}
+
+.save-btn:hover {
+    background-color: #0056b3;
+}
+
+
+
+
+/* Visualizar eventos */
+.events-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+}
+
+.card {
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    text-align: center;
+    padding: 20px;
+}
+
+.card-img {
+    width: 100px;
+    height: 100px;
+    background-color: #ddd;
+    margin: 0 auto 10px;
+}
+
+.card-info h3 {
+    margin: 0 0 10px;
+}
+
+.card-info p {
+    margin: 5px 0;
+}
+
+.card-actions {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 10px;
+}
+
+.edit-btn,
+.delete-btn {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 1.2em;
+}
+
+.edit-btn:hover,
+.delete-btn:hover {
+    color: #0056b3;
+}
+
+
+/* Estilo do Popup deletar eventos */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.modal-content p {
+    margin-bottom: 20px;
+}
+
+.modal-content button {
+    padding: 10px 20px;
+    margin: 5px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.modal-content button:hover {
+    background-color: #ddd;
+}
+
+/* Estilo do Popup editar eventos */
+#edit-event-popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 20px;
+    border: 1px solid #ccc;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    max-width: 400px;
+    display: none;
+}
+
+#edit-event-popup.visible {
+    display: block;
+}
+
+
+/* Ocultar seção */
+.hidden {
+    display: none;
+}
+
+
+/* Estilo responsivo */
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column;
+    }
+
+    .sidebar {
+        width: 100%;
+        height: auto;
+    }
+
+    .main-content {
+        padding: 10px;
+    }
+
+    .create-event-form {
+        grid-template-columns: 1fr;
+    }
+}

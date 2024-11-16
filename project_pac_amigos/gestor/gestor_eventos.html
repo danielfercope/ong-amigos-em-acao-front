@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="pt">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestor - Eventos</title>
+    <link rel="stylesheet" type="text/css" href="gestor_eventos.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script defer src="gestor_eventos.js"></script>
+</head>
+
+<body>
+    <!-- Menu lateral e título da aba -->
+    <div class="container">
+        <aside class="sidebar">
+            <div class="profile">
+                <div class="profile-img">
+                    <img src="logo.svg" alt="Amigos Em Ação">
+                </div>
+                <div class="profile-name"></div>
+            </div>
+            <nav class="menu">
+                <ul>
+                    <li>
+                        <a href="gestor_perfil.html">Meu perfil</a>
+                    </li>
+                    <li>
+                        <a href="gestor_equipe.html">Público</a>
+                    </li>
+                    <li>
+                        <a href="gestor_eventos.html" class="active">Controle de eventos</a>
+                    </li>
+                </ul>
+            </nav>
+            <div class="logout">
+                <a href="../paginaPricipal.html">Sair da conta</a>
+            </div>
+        </aside>
+        <main class="main-content">
+            <header class="header">
+                <p class="username">Bem vindo,<br><span>Gestor(a)!</span></p>
+            </header>
+
+            <!-- Aba principal -->
+            <section class="events">
+
+                <!-- Botões troca de aba -->
+                <div class="tabs">
+                    <button class="tab active" id="create-event-tab">Criar eventos</button>
+                    <button class="tab" id="view-events-tab">Visualizar eventos</button>
+                </div>
+
+                <!-- Aba criar eventos -->
+                <div id="create-event-form">
+                    <form>
+                        <div class="form-group">
+                            <label for="event-name">Nome do evento</label>
+                            <input type="text" id="event-name" placeholder="Nome do evento">
+                            <label class="label"></label>
+                            <i class="fas fa-pencil-alt"></i>
+                        </div>
+                        <p></p>
+                        <div class="form-group">
+                            <label for="event-date">Data do evento</label>
+                            <input type="date" id="event-date" placeholder="dd de Mês aaaa">
+                        </div>
+                        <p></p>
+                        <div class="form-group">
+                            <label for="event-registration-date">Descrição do evento</label>
+                            <input type="text" id="descEvento" placeholder="Como será o evento?">
+                            <label class="label"></label>
+                            <i class="fas fa-pencil-alt"></i>
+                        </div>
+                        <p></p>
+                        <div class="form-group">
+                            <label for="event-location">Local do evento</label>
+                            <input type="text" id="event-location" placeholder="Endereço do Evento">
+                            <label class="label"></label>
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <p></p>
+                        <button type="submit" class="save-btn">Salvar</button>
+                    </form>
+                </div>
+
+                <!-- Aba visualizar eventos -->
+                <div id="view-events" class="hidden">
+                    <div class="events-cards">
+                        <!-- Eventos serão carregados aqui pelo banco de dados -->
+                    </div>
+                </div>
+
+                <!-- Popup de Deletar evento  -->
+                <div id="confirmation-modal" class="hidden modal">
+                    <div class="modal-content">
+                        <p>Tem certeza que deseja deletar este evento?</p>
+                        <button id="confirm-delete-btn">Sim</button>
+                        <button id="cancel-delete-btn">Não</button>
+                    </div>
+                </div>
+
+                <!-- Popup de Editar evento -->
+                <!-- Popup de Editar evento -->
+                <div id="edit-event-popup" class="hidden">
+                    <form>
+                        <div class="form-group">
+                            <label for="edit-event-name">Nome do Evento</label>
+                            <input type="text" id="edit-event-name" placeholder="Nome Evento">
+                            <i class="fas fa-pencil-alt"></i>
+                        </div>
+                        <p></p>
+                        <div class="form-group">
+                            <label for="edit-event-date">Data do Evento</label>
+                            <input type="date" id="edit-event-date" placeholder="dd de Mês aaaa">
+                        </div>
+                        <p></p>
+                        <div class="form-group">
+                            <label for="edit-descEvento">Descrição do Evento</label>
+                            <input type="text" id="edit-descEvento" placeholder="Como será o evento?">
+                        </div>
+                        <p></p>
+                        <div class="form-group">
+                            <label for="edit-event-location">Local</label>
+                            <input type="text" id="edit-event-location" placeholder="endereço">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <p></p>
+                        <button type="submit" class="save-btn" onclick="window">Salvar Alterações</button>
+                        <button id="cancel-edit-btn">Cancelar</button>
+                    </form>
+                </div>
+
+
+            </section>
+        </main>
+    </div>
+</body>
+
+</html>

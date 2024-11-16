@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="pt">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestor - Feedback</title>
+    <link rel="stylesheet" type="text/css" href="gestor_feedback.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script defer src="gestor_feedback.js"></script>
+</head>
+
+<body>
+    <!-- Menu lateral e título da aba -->
+    <div class="container">
+        <aside class="sidebar">
+            <div class="profile">
+                <div class="profile-img">
+                    <img src="logo.svg" alt="Amigos Em Ação">
+                </div>
+            </div>
+            <nav class="menu">
+                <ul>
+                    <li>
+                        <a href="gestor_perfil.html">Meu perfil</a>
+                    </li>
+                    <li>
+                        <a href="gestor_equipe.html">Equipe</a>
+                    </li>
+                    <li>
+                        <a href="gestor_eventos.html">Eventos</a>
+                    </li>
+                    <li>
+                        <a href="gestor_feedBack.html" class="active">Feedbacks</a>
+                    </li>
+                </ul>
+            </nav>
+            <div class="logout">
+                <a href="../paginaPricipal.html">Sair da Conta</a>
+            </div>
+        </aside>
+        <main class="main-content">
+            <header class="header">
+                <p class="username">Bem vindo,<br><span>Gestor(a)!</span></p>
+            </header>
+
+            <!-- Aba principal -->
+            <section class="feed">
+                <div class="tabs">
+                    <div class="tab active" id="feed-tab">Feedbacks</div>
+                </div>
+
+                <!-- Feedbacks-->
+                <div id="feed-form">
+                    <div class="botoes-feed">
+                        <div class="card" id="bot-fed">
+                            <div class="card-header">
+                                <div class="card-header-icon">
+                                    <i class="fa-solid fa-arrow-down"></i>
+                                    <span>&emsp; Feedback</span>
+                                </div>
+                                <div class="card-header-right">
+                                    <div class="data">
+                                        <span>dd/mm/aa</span>
+                                    </div>
+                                    <button class="bot-deleta-feed"><i class="fa-solid fa-trash"
+                                            id="deleteIcon"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Dropdown-->
+                    <div class="dropdown-content" id="dropdown-fed">
+                        <div class="descricao-dados-container">
+                            <div class="descricao-feed">
+                                <p>Detalhes do feedback do usuário João...</p>
+                            </div>
+                            <div class="dados-feed">
+                                <p>Telefone:</p>
+                                <p>Email:</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Popup de Deletar feedback -->
+                <div id="confirmation-modal-feed" class="hidden modal">
+                    <div class="modal-content-feed">
+                        <p>Tem certeza que deseja deletar este feedback?</p>
+                        <button id="confirm-delete-feed">Sim</button>
+                        <button id="cancel-delete-feed">Não</button>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const form = document.getElementById('feedback-form');
+            const nomeInput = document.getElementById('nome');
+
+
+            // Listener para o envio do formulário
+            form.addEventListener('submit', function (event) {
+                event.preventDefault(); // Previne o envio padrão do formulário
+
+                const formData = new FormData(event.target);
+                let data = {
+                    descricao: formData.get('descricao')
+                };
+
+                fetch('http://127.0.0.1:5000//lista-feedBack', {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                })
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Erro na submissão');
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        alert('Feedback enviado com sucesso!');
+                        event.target.reset(); // Reseta o formulário
+                    })
+                    .catch(error => {
+                        console.error('Erro:', error);
+                        document.querySelector('.error').style.display = 'block';
+                    });
+            });
+        });
+    </script>
+
+</body>
+
+</html>

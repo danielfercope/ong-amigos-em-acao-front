@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="pt">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestor - Perfil</title>
+    <link rel="stylesheet" type="text/css" href="voluntario_perfil.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+
+<body>
+    <div class="container">
+        <aside class="sidebar">
+            <div class="profile">
+                <div class="profile-img">
+                    <img src="/images/logo.svg" alt="Amigos Em Ação">
+                </div>
+                <div class="profile-name"></div>
+            </div>
+            
+            <div class="logout">
+                <a href="../paginaPricipal.html" onclick="logout()">Sair da Conta</a>
+            </div>
+        </aside>
+        <main class="main-content">
+            <header class="header">
+                <p class="username">Bem vindo,<br><span>Amigo(a)</span></p>
+            </header>
+            <section class="events">
+                <div class="tabs">
+                    <button class="tab active" id="create-event-tab">Meu Perfil</button>
+                </div>
+                <form id="profile-form" onsubmit="return editarPerfil(event)">
+                    <div class="form-group">
+                        <label for="username">Nome de usuário</label>
+                        <input type="text" id="username" placeholder="Nome de usuário" oninput="habilitarBotao()">
+                        <label class="label"></label>
+                        <i class="fas fa-pencil-alt" style="color: #2999E7;"></i>
+                    </div>
+                    <p></p>
+                    <div class="form-group">
+                        <label for="email">E-mail</label>
+                        <input type="text" id="email" placeholder="E-mail" oninput="habilitarBotao()">
+                        <label class="label"></label>
+                        <i class="fa-solid fa-envelope" style="color: #2999E7;"></i>
+                    </div>
+                    <p></p>
+                    <div class="form-group">
+                        <label for="phone">Telefone</label>
+                        <input type="text" id="phone" placeholder="Telefone" oninput="habilitarBotao()">
+                        <label class="label"></label>
+                        <i class="fa-solid fa-phone fa-flip-horizontal" style="color: #2999E7;"></i>
+                    </div>
+                    <p></p>
+                    <button type="submit" class="save-btn" id="edit-btn" disabled>Editar</button>
+                </form>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        // Função para preencher os campos do formulário com os dados do voluntário
+        async function preencherPerfil() {
+            try {
+                // Recuperar o ID do usuário do localStorage
+                const userId = localStorage.getItem('userId');
+                if (!userId) {
+                    throw new Error('ID do usuário não encontrado');
+                }
+
+                const response = await fetch(`http://127.0.0.1:5000/listar-voluntarios-edit/${userId}`);
+                if (!response.ok) {
+                    throw new Error('Erro ao buscar os dados do voluntário');
+                }
+                const dados = await response.json();
+
+                // Assumindo que a resposta contém um objeto com as informações do voluntário
+                document.getElementById('username').value = dados.nomeVoluntario || '';
+                document.getElementById('email').value = dados.emailVoluntario || '';
+                document.getElementById('phone').value = dados.telefoneVoluntario || '';
+            } catch (error) {
+                console.error('Erro:', error);
+            }
+        }
+
+        // Chama a função ao carregar a página
+        window.onload = preencherPerfil;
+
+        // Função de logout
+        function logout() {
+            localStorage.removeItem('userId');
+        }
+
+        // Função para habilitar o botão de editar
+        function habilitarBotao() {
+            const editBtn = document.getElementById('edit-btn');
+            editBtn.disabled = false;
+        }
+
+        // Função para editar o perfil
+        async function editarPerfil(event) {
+            event.preventDefault();
+
+            const userId = localStorage.getItem('userId');
+            if (!userId) {
+                alert('ID do usuário não encontrado');
+                return;
+            }
+
+            const dados = {
+                nomeVoluntario: document.getElementById('username').value,
+                emailVoluntario: document.getElementById('email').value,
+                telefoneVoluntario: document.getElementById('phone').value
+            };
+
+            try {
+                const response = await fetch(`http://127.0.0.1:5000/editar-formulario-voluntario/${userId}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(dados)
+                });
+
+                if (response.ok) {
+                    alert('Perfil atualizado com sucesso');
+                } else {
+                    alert('Erro ao atualizar perfil');
+                }
+            } catch (error) {
+                console.error('Erro:', error);
+                alert('Erro ao atualizar perfil');
+            }
+        }
+    </script>
+</body>
+
+</html>

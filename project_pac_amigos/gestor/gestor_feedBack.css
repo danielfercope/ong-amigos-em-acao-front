@@ -1,0 +1,312 @@
+/* General Styles */
+body, html {
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+}
+
+.menu a.active {
+    color: #2999E7;
+}
+
+.container {
+    display: flex;
+    height: 100vh;
+}
+
+/* Barra lateral estilo */
+.sidebar {
+    background-color: #e3e3e338;
+    width: 250px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 40px;
+}
+
+.profile {
+    text-align: center;
+    margin-bottom: 20px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.profile-img {
+    width: 100px;
+    height: 100px;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.menu ul {
+    list-style: none;
+    padding: 0;
+    width: 100%;
+    text-align: center;
+}
+
+.menu ul li {
+    padding: 10px 0;
+    width: 100%;
+    cursor: pointer;
+}
+
+.menu ul a {
+    color: #000;
+    text-decoration: none;
+}
+
+.menu ul a:hover {
+    color: #2999E7;
+}
+
+.logout {
+    margin-top: auto;
+    padding: 20px;
+}
+
+.logout a {
+    text-decoration: none;
+    color: #000;
+}
+
+.logout a:hover {
+    color: #2999E7;
+}
+
+/* Main Content Styles */
+.main-content {
+    flex: 1;
+    padding: 20px;
+}
+
+.header {
+    margin-bottom: 20px;
+}
+
+.header .username {
+    font-size: 2.5em;
+    font-weight: bold;
+}
+
+.header span {
+    color: #2999E7;
+}
+
+/* Background da aba principal */
+.feed {
+    background-color: #e3e3e338;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+/* Titulo da aba */
+.tabs {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 20px;
+}
+
+.tab {
+    font-family: 'Poppins', sans-serif;
+    font-size: 20px;
+    padding: 10px 20px;
+    cursor: pointer;
+    border: none;
+    background: none;
+    font-weight: bold;
+    color: #333;
+}
+
+.tab:hover {
+    color: #2999E7;
+}
+
+.tab.active {
+    color: #2999E7;
+    border-bottom: 2px solid #2999E7;
+    font-weight: bold;
+}
+
+/* feedbacks */
+.feed-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    align-items: flex-start;
+}
+
+.data {
+    padding-right: 17px;
+    border-right: 2px solid #2999E7;
+}
+
+.fa-solid {
+    color: #2999E7;
+}
+
+.bot-deleta-feed {
+    border: none;
+    background-color: transparent;
+}
+
+#deleteIcon {
+    color: #f06b6b;
+}
+
+/* Estilos adicionais, se necessário */
+.icon-large {
+    font-size: 24px;
+    color: #2999E7;
+}
+
+/* Comentarios feedbacks */
+.card {
+    background-color: #fff;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    max-width: 1500px; /* Ajuste conforme necessário */
+    text-align: left;
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    display: block;
+    transition: background-color 0.3s;
+    box-sizing: border-box;
+}
+
+.card:hover {
+    background-color: #e0e0e0;
+}
+
+.card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.card-header-icon {
+    display: flex;
+    align-items: center;
+}
+
+.card-header-right {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.card-body {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 0;
+}
+
+.card-body .progress-bar {
+    flex: 1;
+    margin-right: 10px;
+}
+
+
+/*Dropdown*/
+.dropdown-content {
+    display: none;
+    background-color: #f9f9f9;
+    padding: 10px;
+    margin-top: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.descricao-dados-container {
+    display: flex;
+    gap: 20px;
+}
+
+.descricao-feed {
+    flex: 2;
+    background-color: #ffffff;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.dados-feed {
+    flex: 1;
+    color: #2999E7;
+    background-color: #ffffff;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+/* Popup deletar feedbacks */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content-feed {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.modal-content-feed p {
+    margin-bottom: 20px;
+}
+
+.modal-content-feed button {
+    padding: 10px 20px;
+    margin: 5px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.modal-content-feed button:hover {
+    background-color: #ddd;
+}
+
+.hidden {
+    display: none;
+}
+
+/* Estilo responsivo */
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column;
+    }
+    .sidebar {
+        width: 100%;
+        height: auto;
+    }
+    .main-content {
+        padding: 10px;
+    }
+    .card {
+        width: 100%;
+    }
+    .descricao-dados-container {
+        flex-direction: column;
+    }
+}

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Responsive Sign-Up Form</title>
+    <link rel="stylesheet" href="style_create.css">
+</head>
+<body>
+    <div class="container">
+        <div class="form-container">
+            <h1>Procuro Ajuda</h1>
+            <p class="create_text">Seus dados não serão compartilhados com ninguém</p>
+            <form id="helpForm">
+                <label for="userName">Nome (Social)</label>
+                <input id="userName" name="userName" type="text" placeholder="Digite seu nome" required>
+                <label for="userPhone">Telefone</label>
+                <input id="userPhone" name="userPhone" type="text" placeholder="Digite seu telefone" required>
+                <label for="userFamilyDescription">Descreva sua família</label>
+                <input id="userFamilyDescription" name="userFamilyDescription" type="text" placeholder="2 adultos e 1 criança..." required>
+                <label for="userNeeds">Necessidade</label>
+                <textarea id="userNeeds" name="userNeeds" type="text" placeholder="Digite o que precisa" required></textarea>
+
+                <br>
+                <button class="create" type="submit">Enviar</button>
+            </form>
+        </div>
+        <div class="welcome-container">
+            <h2>Estamos contigo nessa!</h2>
+            <p>Do que você precisa? </p>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('helpForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const formData = {
+                userName: document.getElementById('userName').value,
+                userPhone: document.getElementById('userPhone').value,
+                userFamilyDescription: document.getElementById('userFamilyDescription').value,
+                userNeeds: document.getElementById('userNeeds').value
+            };
+
+            fetch('http://127.0.0.1:5000/cadastrar-usuario-carente', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(formData)
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.error) {
+                    alert('Erro: ' + data.error);
+                } else {
+                    alert('Resposta enviada! Entraremos em contato o mais rápido possível. ');
+                    
+                    document.getElementById('helpForm').reset();
+                }
+            })
+            .catch(error => {
+                console.error('Erro ao enviar o formulário:', error);
+                alert('Erro ao enviar o formulário. Tente novamente.');
+            });
+        });
+    </script>
+</body>
+</html>

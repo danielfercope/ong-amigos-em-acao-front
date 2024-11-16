@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login-Gestor</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="login_create_gestor.css">
+    <link rel="shortcut icon" href="login-icon.png" type="image/x-icon">
+</head>
+<body>
+
+    <div class="container" id="container">
+        <div class="form-container sign-up-container">
+            <form id="sign-up-form">
+                <h1>Criar Conta</h1>
+                <br>
+                <span>Crie uma conta para se voluntariar!<br>Seus dados não serão compartilhados com ninguém</span>
+                <br>
+                <div class="infield">
+                    <input id="createName" name="name" type="text" placeholder="Name" required/>
+                    <label></label>
+                </div>
+                <div class="infield">
+                    <input id="createEmail" name="email" type="email" placeholder="Email" required/>
+                    <label></label>
+                </div>
+                <div class="infield">
+                    <input id="createPassword" name="password" type="password" placeholder="Password" required/>
+                    <label></label>
+                </div>
+                <button class="create" type="submit">Criar conta</button>
+            </form>
+        </div>
+        <div class="form-container sign-in-container">
+            <form id="login-form">
+                <h1>Login</h1>
+                <br>
+                <span>Faça login em sua conta!<br>Seus dados não são compartilhados com ninguém</span>
+                <br>
+                <div class="infield">
+                    <input id="email" type="email" placeholder="Email" name="email" required/>
+                    <label></label>
+                </div>
+                <div class="infield">
+                    <input id="password" type="password" placeholder="Senha" required>
+                    <label></label>
+                </div>
+                <button class="create" type="submit">Entrar</button>
+            </form>
+        </div>
+        <div class="overlay-container" id="overlayCon">
+            <div class="overlay">
+                <div class="overlay-panel overlay-left">
+                    <h1>Olá, Gestor(a)!</h1>
+                    <p>Para continuar conectado conosco, entre em sua conta</p>
+                    <button id="login-btn">Login</button>
+                </div>
+                <div class="overlay-panel overlay-right">
+                    <h1>Bem-Vindo(a)!</h1>
+                    <p>Cadastre seus dados pessoais e junte-se a nós nessa jornada</p>
+                    <button id="signup-btn">Criar conta</button>
+                </div>
+            </div>
+            <button id="overlayBtn"></button>
+        </div>
+    </div>
+    
+    <script>
+        // Estilização
+        const container = document.getElementById('container');
+        const overlayCon = document.getElementById('overlayCon');
+        const overlayBtn = document.getElementById('overlayBtn');
+
+        overlayBtn.addEventListener('click', ()=> {
+            container.classList.toggle('right-panel-active');
+
+            overlayBtn.classList.remove('btnScaled');
+            window.requestAnimationFrame( ()=> {
+                overlayBtn.classList.add('btnScaled');
+            });
+        });
+
+        // Mostrar o formulário correto com base no parâmetro da URL
+        function showFormBasedOnURL() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const formType = urlParams.get('form');
+
+            if (formType === 'signup') {
+                container.classList.add('right-panel-active');
+            } else {
+                container.classList.remove('right-panel-active');
+            }
+        }
+
+        // Chamar a função ao carregar a página
+        document.addEventListener('DOMContentLoaded', showFormBasedOnURL);
+
+        // Back-End - Integração
+        document.getElementById('sign-up-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const formData = new FormData(event.target);
+            const data = {
+                nomeGestor: formData.get('name'),
+                emailGestor: formData.get('email'),
+                pinGestor: formData.get('password'),
+            };
+
+            fetch('http://127.0.0.1:5000/cadastrar-gestores', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => response.json().then(data => ({status: response.status, body: data})))
+            .then(response => {
+                if (response.status === 201) {
+                    alert('Conta criada com sucesso!');
+                    container.classList.remove('right-panel-active');
+                } else {
+                    alert('Erro ao criar conta! ' + (response.body.message || ''));
+                }
+            })
+            .catch(error => {
+                console.error('Erro:', error);
+                alert('Erro ao criar conta!');
+            });
+        });
+
+        document.getElementById('login-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            const data = {
+                email: email,
+                password: password
+            };
+
+            fetch('http://127.0.0.1:5000/validacao-gestor', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.authenticated) {
+                    const userId = data.idGestor;
+                    alert('Login bem-sucedido!');
+                    window.location.href = 'gestor_eventos.html';
+                    localStorage.setItem('userId', userId);
+                } else {
+                    alert('Credenciais inválidas. Por favor, tente novamente.');
+                }
+            })
+            .catch(error => {
+                console.error('Erro ao tentar fazer login:', error);
+                alert('Erro ao tentar fazer login. Por favor, tente novamente.');
+            });
+        });
+
+    </script>
+
+</body>
+</html>

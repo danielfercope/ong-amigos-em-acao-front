@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="pt">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quero Ajudar</title>
+    <link rel="stylesheet" type="text/css" href="quero_ajudar.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+
+<body>
+    <div class="container">
+        <aside class="sidebar">
+            <div class="profile">
+                <div class="profile-img">
+                    <img src="/images/logo.svg" alt="Amigos Em Ação">
+                </div>
+                <div class="profile-name"></div>
+            </div>
+        </aside>
+        <main class="main-content">
+            <header class="header">
+                <p class="username">A Ong Amigos em Ação agradece seu apoio</p>
+            </header>
+            <section class="events">
+                <div class="tabs">
+                    <button class="tab active" id="create-event-tab">Quero ajudar</button>
+                </div>
+                <form>
+                    <div class="form-group">
+                        <label for="event-name">Nome de usuário</label>
+                        <input type="text" id="event-name" placeholder="Nome de usuário">
+                        <label class="label"></label>
+                        <i class="fas fa-pencil-alt" style="color: #2999E7;"></i>
+                    </div>
+                    <p></p>
+                    <div class="form-group">
+                        <label for="event-location">Telefone</label>
+                        <input type="text" id="event-location" placeholder="Telefone">
+                        <label class="label"></label>
+                        <i class="fa-solid fa-phone fa-flip-horizontal" style="color: #2999E7;"></i>
+                    </div>
+                    <p></p>
+                    <div class="form-group">
+                        <label for="help-type">Tipo de ajuda</label>
+                        <select id="help-type" name="help-type">
+                            <option value="duvidas-gerais">Alimentos</option>
+                            <option value="duvidas-gerais">Vestimentas</option>
+                            <option value="suporte-tecnico">Bens materiais</option>
+                            <option value="feedback">Bens financeiros</option>
+                            <option value="outros">Colaboração</option>
+                        </select>
+                    </div>
+                    <p></p>
+                    <button type="submit" class="save-btn">Enviar</button>
+                </form>
+                <div id="view-events">
+                    <div class="pix">
+                        <div class="left-section">
+                            <p>
+                                Nossa ONG não dispõe de recursos próprios, dependendo, assim,
+                                das doações dos associados para realizar trabalhos. Todo valor
+                                arrecadado é convertido em doações às famílias carentes e
+                                aos projetos sociais atendidos nesta cidade. Portanto, caso
+                                deseje contribuir conosco em dinheiro, aceitamos com muita
+                                felicidade e gratidão qualquer quantia!
+                            </p>
+                        </div>
+                        <div class="right-section">
+                            <h3>Informações bancárias</h3>
+                            <div class="bank-info">
+                                <div class="info">
+                                    <p style="color: #2999E7;">Agência</p>
+                                    <p>2727-8</p>
+                                </div>
+                                <div class="info">
+                                    <p style="color: #2999E7;">Conta</p>
+                                    <p>14531-9</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+</body>
+
+</html>
