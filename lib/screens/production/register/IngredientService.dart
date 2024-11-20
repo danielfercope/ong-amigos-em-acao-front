@@ -24,6 +24,8 @@ class IngredientService {
       body: json.encode(receipe),
     );
 
-
+    if (response.statusCode != 201) {
+      throw Exception('Erro ao cadastrar receita');
+    }
   }
 }
