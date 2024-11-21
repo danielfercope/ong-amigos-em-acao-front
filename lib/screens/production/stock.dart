@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:panfit_app/screens/production/register/BarcodeScannerPage.dart';
 import 'package:panfit_app/screens/production/register/input_register.dart';
 import 'package:panfit_app/repository/item_repository.dart';
 import 'package:panfit_app/domain/item.dart';
@@ -27,8 +28,8 @@ class _StockPageState extends State<StockPage> {
         appBar: AppBar(
           bottom: TabBar(
             tabs: [
-              Tab(text: 'Produtos'),
               Tab(text: 'Ingredientes'),
+              Tab(text: 'Produtos'),
             ],
             labelColor: Color(0xFF996536),
             unselectedLabelColor: Colors.grey,
@@ -60,7 +61,7 @@ class _StockPageState extends State<StockPage> {
                     );
                   },
                 ),
-                Center(child: Text('Lista de Ingredientes')), // Exemplo de outra aba
+                Center(child: Text('Lista de produtos')), // Exemplo de outra aba
               ],
             );
           },
@@ -71,7 +72,7 @@ class _StockPageState extends State<StockPage> {
             final result = await Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => InputRegisterPage(),
+                builder: (context) => BarcodeScannerPage(),
               ),
             );
 
