@@ -70,7 +70,7 @@
                     throw new Error('ID do usuário não encontrado');
                 }
 
-                const response = await fetch(`http://127.0.0.1:5000/listar-voluntarios-edit/${userId}`);
+                const response = await fetch(`http://13.218.106.109:5000/listar-voluntarios-edit/${userId}`);
                 if (!response.ok) {
                     throw new Error('Erro ao buscar os dados do voluntário');
                 }
@@ -116,7 +116,7 @@
             };
 
             try {
-                const response = await fetch(`http://127.0.0.1:5000/editar-formulario-voluntario/${userId}`, {
+                const response = await fetch(`hhttp://13.218.106.109:5000/editar-formulario-voluntario/${userId}`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
