@@ -112,7 +112,7 @@
                 telefoneVoluntario: formData.get('telefoneVoluntario')
             };
 
-            fetch('http://54.174.83.67/:5000/cadastrar-voluntarios', {
+            fetch('http://54.174.83.67:5000/cadastrar-voluntarios', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -145,7 +145,7 @@
                 password: password
             };
 
-            fetch('http://54.174.83.67/:5000/validacao_usuario', {
+            fetch('http://54.174.83.67:5000/validacao_usuario', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
